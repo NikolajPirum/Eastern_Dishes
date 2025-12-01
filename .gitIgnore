@@ -6,11 +6,5 @@ server/node_modules/
 client/.env
 server/.env
 
-#multer
-/server/uploads/
-
 #vs code settings 
 .vscode/
-
-#svelte readme
-/client/README 
