@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "food, recipes, dishes",
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "deleteDatabase": "node ./database/createDatabase.js delete",
+    "updateDatabase": "node ./database/createDatabase.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.11",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "toastr": "^2.1.4"
+  }
+}
