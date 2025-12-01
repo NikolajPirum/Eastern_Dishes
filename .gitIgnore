@@ -11,3 +11,6 @@ server/.env
 
 #vs code settings 
 .vscode/
+
+#svelte readme
+/client/README 
