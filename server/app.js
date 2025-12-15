@@ -10,23 +10,42 @@ app.use(express.urlencoded()); //middleware til at parse form-data.
 // angiver url rute og mappen hvor dish_image ligger
 app.use('/uploads', express.static('uploads'));
 
-// 
+//========================================= CORS =======================================================
 import cors from 'cors';
-app.use(cors({ //tillader cors mellem front- og backend 
-    origin: true,
-    credentials: true //tillader at sende cookies (med sessio info)
+app.use(cors({  
+    origin: process.env.CLIENT_URL,
+    credentials: true //tillader at sende cookies (med session info)
 }));
 
+//============================================= SESSION ===================================================
 import session from 'express-session';
 
 //opretter middleware session for alle HTTP request
-app.use(session({
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
-}))
+});
 
+app.use(sessionMiddleware);
+
+// ============================================ CREATE SERVER ====================================
+import http from 'http';
+const server = http.createServer(app);
+
+import { Server } from 'socket.io'
+const io = new Server(server, {
+  cors : {
+    origin : [process.env.CLIENT_URL],
+    credentials : true
+  }
+});
+
+// Bind Express-session with socket.io connection 
+io.engine.use(sessionMiddleware);
+
+//============================================================ ROUTERS ================================================
 import dishesRouter from './routers/dishes.js'
 app.use(dishesRouter);
 
@@ -39,5 +58,36 @@ app.use(loginRouter);
 import homeRouter from './routers/home.js'
 app.use(homeRouter);
 
+//=================================================== SOCKET.IO =======================================================
+import db from './database/connection.js'
+io.on('connected', async (socket) =>{
+  
+  console.log('socket connected:', socket.id);
+  
+  const usernameObj = await db.get(`SELECT username FROM users WHERE id=?;`, [socket.request.session.userId]);
+
+  //sends username to frontend
+  let username = usernameObj.username;
+  socket.emit('server-sends-user', username);
+
+
+  socket.on('client-sends-message', (chatMessage) => {
+    if(socket.connected){
+    io.emit('server-sends-message',{
+      user : username,
+       message : chatMessage.message,
+       online : true });
+  }
+  });
+  
+
+  socket.on('disconnect', () => {
+    console.log('sokcet disconnected: ', socket.id);
+  })
+
+});
+
+
+//============================================ PORT ===================================================================
 const PORT = Number(process.env.PORT || 8080);
-app.listen(PORT, ()=> { console.log("server is running on port: " ,PORT) });
+server.listen(PORT, ()=> { console.log("server is running on port:" ,PORT) });
