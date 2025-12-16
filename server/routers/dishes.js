@@ -3,13 +3,13 @@ import db from '../database/connection.js'
 
 const router = Router();
 
-//middleware handler for upload af multipart/formdata. Oploadet filer til mappen server/uploads
+//middleware handler for upload af multipart/formdata. Oploadet filer lokation: server/uploads
 import multer from 'multer';
 const upload = multer({
     dest: './uploads',
 });
 
-// POST ny ret med med billede(jpg eller png)
+// POST ny ret med billede(jpg eller png)
 router.post("/api/dishes", upload.single("dish_image"), async (req, res) => {
     const userId = req.session.userId 
     const {name, dish_origin } = req.body;
@@ -37,9 +37,10 @@ router.post("/api/dishes", upload.single("dish_image"), async (req, res) => {
 router.get("/api/dishes", async (req,res) => {
     try{
         const result = await db.all('SELECT * FROM dishes;');
+
         res.status(200).send({success: true, data: result});
     }catch(error){
-        console.error("Could not get the data", error)
+        console.error("Kunne ikke hente data", error)
         res.status(500).send({ success: false, error : error.message})
     }
 });
@@ -52,7 +53,7 @@ router.get("/api/dishes/:userId", async (req,res) => {
 
         res.status(200).send({ success : true, data: result});
     }catch(error){
-        console.error("kunne ikke finde user med id : " + userId, error);
+        console.error("kunne ikke finde user med id:", userId, error);
 
         res.status(400).send({
             success : false,

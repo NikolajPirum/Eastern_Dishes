@@ -4,7 +4,7 @@ const router = Router();
 
 import db from '../database/connection.js'
 
-//middleware for tjek om user role = ADMIN
+//middleware tjek af user role = ADMIN
 function isAdmin(req, res, next) {
     if (req.session.role === "ADMIN") {
         return next();

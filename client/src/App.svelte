@@ -5,6 +5,8 @@
     import ValidateLogin from './components/ValidateLogin.svelte';
     import { loggedIn } from './store/isLoggedInStore.js'
     import SignOut from './pages/Login/SignOut.svelte';
+
+    import LiveChat from './components/LiveChat.svelte';
 </script>
 
 <Router>
@@ -22,5 +24,6 @@
         <SignOut/>
     </nav>
         <ValidateLogin component={Home} />
+        <LiveChat/>
     </Route>
 </Router>

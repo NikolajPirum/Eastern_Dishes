@@ -28,7 +28,7 @@
             return [...currentDishes, result.data]
             });
         }
-        toastr.success("dish er tilføjet")
+        toastr.success("dish er tilføjet");
         dialog.close();
         form.reset();
     }catch(error){

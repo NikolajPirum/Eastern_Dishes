@@ -1,6 +1,6 @@
 import db from './connection.js'
 
-// gør delete med command: npm run deleteDatabase
+// delete command: npm run deleteDatabase
 const deleteMode = process.argv.includes('delete');
 
 if (deleteMode) {

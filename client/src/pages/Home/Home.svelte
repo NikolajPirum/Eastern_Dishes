@@ -7,7 +7,7 @@
     import Dishes from '../Dishes/Dishes.svelte';
     import SignOut from '../Login/SignOut.svelte';
 
-    //komponenter mountes hvis: komponent ligger i root(app.svelte), if statement er true, eller når Route matcher. hvis komponenten fjernes fra DOM kører onDestroy
+    //komponenter mountes hvis: komponent ligger i root(app.svelte), hvis if true, eller når Route matcher. hvis komponenten fjernes fra DOM kører onDestroy
     onMount(async () => { 
         try {
             const result = await fetchGet("/api/home");

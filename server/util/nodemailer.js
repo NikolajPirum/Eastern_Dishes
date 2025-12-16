@@ -23,6 +23,6 @@ const transporter = nodemailer.createTransport({
     html: "<b>Reset Password</b>", // HTML body
   });
 
-  console.log("Message sent:", info.messageId);
+  console.log("Message sent:", info.messageId); //bekræftigelse af dummy mail er sendt
   return info;
 }

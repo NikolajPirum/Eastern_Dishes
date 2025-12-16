@@ -7,7 +7,7 @@ app.use(express.json()); // uden express.json() bliver req.body = undefined
 
 app.use(express.urlencoded()); //middleware til at parse form-data.
 
-// angiver url rute og mappen hvor dish_image ligger
+// angiver url rute og mappen for dish_image
 app.use('/uploads', express.static('uploads'));
 
 //========================================= CORS =======================================================
@@ -60,10 +60,8 @@ app.use(homeRouter);
 
 //=================================================== SOCKET.IO =======================================================
 import db from './database/connection.js'
-io.on('connected', async (socket) =>{
-  
-  console.log('socket connected:', socket.id);
-  
+io.on('connection', async (socket) =>{
+    
   const usernameObj = await db.get(`SELECT username FROM users WHERE id=?;`, [socket.request.session.userId]);
 
   //sends username to frontend

@@ -19,13 +19,10 @@ router.post("/api/login", async(req, res) => {
   }
 
   //opretter session userID og role. //cookien hentes fra serveres mermoryStore //Session ID linker browseren til session-dataen på serveren.
-  req.session.userId = user.id; // gemmes i session objekt. ikke direkte ind i cookien!
+  req.session.userId = user.id; // gemmes i session objekt. ikke direkte i cookie
   req.session.role = user.role;
 
-  return res.status(200).send({ 
-    success: true, 
-    message : "Du er logget ind"
-  });
+  return res.status(200).send({ success: true, message : "Du er logget ind" });
 });
 
 import { sendMail } from '../util/nodemailer.js';
@@ -42,10 +39,8 @@ router.post("/api/resetpassword", async (req,res) => {
 
   if(userEmail.length > 0){
     await sendMail(email); //nodemailer
-    return res.status(201).send({ 
-      success : true, 
-      message : "Email sendt til: " + email
-    });
+
+  return res.status(201).send({ success : true, message : "Email sendt til: " + email });
   }
   return res.status(400).send({ success : false, message : "mail does not exist. Provided mail: " + email});
 });

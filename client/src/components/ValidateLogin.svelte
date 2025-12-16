@@ -3,7 +3,7 @@
     import { navigate } from 'svelte-routing';
     import { onMount } from 'svelte';
 
-    export let component; //denne variable kommer til at indeholde komponenter fra mappen /pages
+    export let component; // komponent fra mappen /pages
 
     onMount(() => {
         if (!$loggedIn) {
@@ -11,7 +11,7 @@
         }
     });
 </script>
-<!-- rendere/viser komponeter dynamisk baseret på "component" -->
+<!-- rendere komponenter dynamisk -->
 {#if $loggedIn}
     <svelte:component this={component} />
 {/if}
