@@ -58,6 +58,9 @@ app.use(loginRouter);
 import homeRouter from './routers/home.js'
 app.use(homeRouter);
 
+import recipesRouter from './routers/recipes.js'
+app.use(recipesRouter);
+
 //=================================================== SOCKET.IO =======================================================
 import db from './database/connection.js'
 io.on('connection', async (socket) =>{
