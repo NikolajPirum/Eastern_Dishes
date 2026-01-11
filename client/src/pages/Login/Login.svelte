@@ -4,6 +4,16 @@
     import toastr from "toastr";
     import "toastr/build/toastr.min.css";
     import { loggedIn } from '../../store/isLoggedInStore.js';
+    import { onMount, onDestroy } from 'svelte';
+    import { isAdmin } from '../../store/isAdmin.js';
+
+        onMount(() => {
+        document.body.classList.add('login-bg');
+    });
+
+    onDestroy(() => {
+        document.body.classList.remove('login-bg');
+    });
 
     async function login() {
         const username = document.getElementById('username').value;
@@ -14,6 +24,7 @@
         if (result.success) {
             toastr.success("Login successful");
             loggedIn.set(true); // opdater global login
+            isAdmin.set(result.role === "ADMIN");
             navigate("/home");  // redirect i SPA uden reload. virker kun på indhold i <Router>
         } else {
             toastr.error("Forkert username eller password");
@@ -39,13 +50,14 @@
 
 </script>
 
-<h1>Login</h1>
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username">
-<br>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
-<br>
+<h1 style="color: aliceblue;">Eastern Dishes</h1>
+
+<input type="text" name="username" id="username" placeholder="Username">
+    <br>
+    <br>
+<input type="password" name="password" id="password" placeholder="Password">
+    <br>
+    <br>
 <button on:click={login}>Login</button>
 
 <button on:click={() => dialog.showModal()}>Reset Password</button>
@@ -53,10 +65,30 @@
 
 <Dialog bind:dialog>
     <h4>Reset Password</h4>
-	<input type="email" name="email" id="email" placeholder="enter your email...">
+	<input type="email" name="email" id="email" placeholder="enter your email..." style="color: black;">
     <button on:click={resetPassword}>Send reset email</button>
     <button on:click= {() => dialog.close()} >Cancel</button>
 </Dialog>
 
 
-
+<style>
+    input{
+        background-color: aliceblue;
+        color: black;
+        font-weight: 300;
+            padding: 12px 16px;
+        font-size: 1.1em;
+        width: 250px;
+        -radius: 8%;
+    }
+    :global(body.login-bg) {
+        background-image: url('/loginBackground.avif');
+        background-size: 100%;
+        background-position: center;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+</style>

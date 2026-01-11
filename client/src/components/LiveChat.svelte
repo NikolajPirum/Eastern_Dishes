@@ -18,7 +18,6 @@
 
             chatMessages.update(chatMessageStoreValues => {
             chatMessageStoreValues.push(data);
-            inpMessage = "" // clears input field 
 
             return chatMessageStoreValues;
             }) 
@@ -30,8 +29,20 @@
     function sendMessage(){
         const sender = $author
 
+        chatMessages.update(chatMessageStoreValues => {
+            chatMessageStoreValues.push({
+                user: sender, 
+                message: inpMessage,
+                online: true
+        });
+        return chatMessageStoreValues;
+    });
+
         const userMessage = {user : sender, message : inpMessage};
         socket.emit('client-sends-message', userMessage);
+
+        inpMessage = "" // clears input field 
+
     }
 
 </script>
@@ -43,4 +54,11 @@
 </div>
 </panel>
 <input bind:value={inpMessage} type="text" placeholder="write a message..">
-<button onclick={sendMessage}>Send Text </button>
+<button onclick={sendMessage}>➢</button>
+
+<style>
+    input{
+        background-color: white;
+        color: black;
+    }
+</style>

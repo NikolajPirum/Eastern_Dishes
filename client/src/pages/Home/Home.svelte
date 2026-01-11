@@ -25,7 +25,8 @@
     });
 </script>
 
-<h2>Velkommen til Eastern Dishes</h2>
+<h2>Wecome to Eastern Dishes</h2>
+<p>Your guide to flavorful habibi cuisine</p>
                         
 <!-- child komponent -->
 <Dishes/>
