@@ -22,9 +22,7 @@
         const result = await fetchPost("/api/login", { username, password });
 
         if (result.success) {
-            toastr.success("Login successful");
-            loggedIn.set(true); // opdater global login
-            isAdmin.set(result.role === "ADMIN");
+            toastr.success("Login successfuld");
             navigate("/home");  // redirect i SPA uden reload. virker kun på indhold i <Router>
         } else {
             toastr.error("Forkert username eller password");

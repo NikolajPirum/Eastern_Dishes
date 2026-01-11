@@ -22,7 +22,7 @@ router.get("/api/session", (req, res) => {
     return res.json({ loggedIn: false, role: null });
 });
 
-router.get("/api/users", async (req,res) => {
+router.get("/api/users", isAdmin, async (req,res) => {
     try{
         const result = await db.all('SELECT id, username, email, role FROM users');
 
@@ -71,7 +71,7 @@ router.post("/api/users", async (req,res) => {
     };
 });
 
-router.patch("/api/users/:userId", async (req,res) => {
+router.patch("/api/users/:userId",isAdmin, async (req,res) => {
     const userId = req.params.userId;
 
     try {

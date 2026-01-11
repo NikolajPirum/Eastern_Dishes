@@ -2,6 +2,7 @@
     import { Router, Route, navigate, Link } from 'svelte-routing';
     import Login from './pages/Login/Login.svelte';
     import Home from './pages/Home/Home.svelte';
+    import { fetchGet } from '../util/fetchUtil.js';
     import ValidateLogin from './components/ValidateLogin.svelte';
     import { loggedIn } from './store/isLoggedInStore.js'
     import SignOut from './pages/Login/SignOut.svelte';
@@ -10,7 +11,21 @@
     import LiveChat from './components/LiveChat.svelte';
     import { isAdmin } from './store/isAdmin.js';
     import UserAdministration from './pages/UserAdministration/UserAdministration.svelte';
+    import { onMount } from 'svelte';
 
+
+    onMount(async () => {
+        try {
+                const data = await fetchGet("/api/session");
+        
+            if (data.userId) {
+                loggedIn.set(true);
+                isAdmin.set(data.role === "ADMIN");
+            }
+        }catch(error) {
+            console.error("kunne ikke tjekke sesssion", error);
+        }
+    });
 </script>
 
 <Router>
@@ -35,7 +50,7 @@
 
     <Route path="/">
         {#if $loggedIn }
-            {navigate("/home")}
+            <Home/>
         {:else}
             <Login />
         {/if}
@@ -54,7 +69,7 @@
     </Route>
 
     <Route path="/admin/users">
-        <UserAdministration></UserAdministration>
+        <UserAdministration/>
     </Route>
 
 </Router>

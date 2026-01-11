@@ -3,7 +3,7 @@ import 'dotenv/config';
 import express from 'express'
 const app = express();
 
-app.use(express.json()); // uden express.json() bliver req.body = undefined 
+app.use(express.json()); 
 
 app.use(express.urlencoded()); //middleware til at parse form-data.
 
@@ -69,6 +69,7 @@ io.on('connection', async (socket) =>{
 
   //sends username to frontend
   let username = usernameObj.username;
+  
   socket.emit('server-sends-user', username);
 
 
@@ -78,7 +79,7 @@ io.on('connection', async (socket) =>{
       user : username,
        message : chatMessage.message,
        online : true });
-  }
+    }
   });
   
 

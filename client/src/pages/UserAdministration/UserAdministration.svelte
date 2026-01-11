@@ -4,9 +4,9 @@
     import toastr from "toastr";
     import Dialog from "../../components/Dialog.svelte";
 
-    let users = [];
+    let users = $state([]);
     let dialog;
-    let editUser = { id: null, username: "", email: "", password: "" };
+    let editUser = $state({ id: null, username: "", email: "", password: "" });
 
 
     onMount( async () => {
@@ -61,9 +61,9 @@
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                    <button id ="edit-button"on:click={() => openEdit(user)}>Rediger</button>
+                    <button id ="edit-button"onclick={() => openEdit(user)}>Rediger</button>
 
-                    <button on:click={() => deleteUser(user.id)}>Slet</button>
+                    <button onclick={() => deleteUser(user.id)}>Slet</button>
                 </td>  
             </tr>
         {/each}
@@ -85,9 +85,9 @@
         <input type="password" bind:value={editUser.password} placeholder="Password"/>
     </label>
     <div class="buttons">
-        <button on:click={saveUser}>Gem</button>
+        <button onclick={saveUser}>Gem</button>
         
-        <button on:click={() => dialog.close()}>Annuller</button>
+        <button onclick={() => dialog.close()}>Annuller</button>
     </div>
 </Dialog>
 

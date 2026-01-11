@@ -46,13 +46,13 @@
     }
 
 </script>
-<panel>
+
 <div>
     {#each $chatMessages as chatMessage}
         <p>{chatMessage.user} : {chatMessage.message}</p>
     {/each}
 </div>
-</panel>
+
 <input bind:value={inpMessage} type="text" placeholder="write a message..">
 <button onclick={sendMessage}>➢</button>
 

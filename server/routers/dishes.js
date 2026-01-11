@@ -9,11 +9,10 @@ const upload = multer({
     dest: './uploads',
 });
 
-// POST ny ret med billede(jpg eller png)
 router.post("/api/dishes", upload.single("dish_image"), async (req, res) => {
     const userId = req.session.userId 
     const {name, dish_origin } = req.body;
-    const dish_image = req.file.filename;
+    const dish_image = req.file.filename; // når man oploader med multer kan man tilgå info via req.file 
 
     try{
         const {lastID} = await db.run(`INSERT INTO dishes (name, dish_origin, dish_image, user_id) VALUES (?, ?, ?, ?)`,

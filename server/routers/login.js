@@ -40,7 +40,7 @@ router.post("/api/resetpassword", async (req,res) => {
   if(userEmail.length > 0){
     await sendMail(email); //nodemailer
 
-  return res.status(201).send({ success : true, message : "Email sendt til: " + email });
+    return res.status(201).send({ success : true, message : "Email sendt til: " + email });
   }
   return res.status(400).send({ success : false, message : "mail does not exist. Provided mail: " + email});
 });
