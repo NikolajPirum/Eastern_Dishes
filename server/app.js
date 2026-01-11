@@ -74,7 +74,7 @@ io.on('connection', async (socket) =>{
 
   socket.on('client-sends-message', (chatMessage) => {
     if(socket.connected){
-    io.emit('server-sends-message',{
+    socket.broadcast.emit('server-sends-message',{
       user : username,
        message : chatMessage.message,
        online : true });

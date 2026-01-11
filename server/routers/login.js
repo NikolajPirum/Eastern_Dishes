@@ -22,7 +22,7 @@ router.post("/api/login", async(req, res) => {
   req.session.userId = user.id; // gemmes i session objekt. ikke direkte i cookie
   req.session.role = user.role;
 
-  return res.status(200).send({ success: true, message : "Du er logget ind" });
+  return res.status(200).send({ success: true, message : "Du er logget ind", role : user.role });
 });
 
 import { sendMail } from '../util/nodemailer.js';
